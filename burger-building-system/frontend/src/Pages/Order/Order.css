@@ -1,0 +1,83 @@
+/** @format */
+
+.order-burger-wrapper {
+    display: flex;
+    width: 800px;
+    flex-direction: row;
+    margin: 0 auto;
+}
+
+.card-outer-wrapper {
+    width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #f6f6f6;
+    padding: 10px 10px 10px 10px;
+    border-radius: 8px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+    align-items: center;
+}
+
+.burger-order-text {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.card-outer-wrapper.beside-burger {
+    margin-top: 20px;
+    height: 400px;
+}
+
+.inner-card-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.bolder-text {
+    font-size: large;
+    font-weight: 600;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: center;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+    text-align: center;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
