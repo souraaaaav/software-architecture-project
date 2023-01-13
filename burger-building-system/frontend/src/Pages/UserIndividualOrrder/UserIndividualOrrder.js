@@ -99,9 +99,15 @@ const UserIndividualOrrder = ({ email }) => {
                             </div>
                         </div>
                     </div>
+
                     <div className='card-extra-wrapper'>
+                        <h1>Extra Details of Order</h1>
                         <span><b>Order Id:</b> {burgerData.order_id}</span>
                         <span><b>Order Date:</b> {new Date(burgerData.order_time).toLocaleDateString("en-US", options)}</span>
+                        <span><b>Order Time:</b> {new Date(burgerData.order_time).toLocaleTimeString()}</span>
+                        <span><b>Delivered:</b> {burgerData.delivered ? <span style={{ color: 'green' }}>True</span> : <span style={{ color: 'red' }}>False</span>}</span>
+                        <span><b>Deliver Date:</b>{new Date(burgerData.order_time) - new Date(burgerData.deliver_time) === 0 ? <span style={{ color: 'red' }} > Order not Ready</span> : <span>{new Date(burgerData.deliver_time).toLocaleDateString()}</span>}</span>
+                        <span><b>Deliver Time:</b>{new Date(burgerData.order_time) - new Date(burgerData.deliver_time) === 0 ? <span style={{ color: 'red' }} > Order not Ready</span> : <span>{new Date(burgerData.deliver_time).toLocaleTimeString()}</span>}</span>
                     </div>
                 </div>}
         </>
