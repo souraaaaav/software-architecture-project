@@ -63,9 +63,16 @@ class Order(models.Model):
     burger = models.OneToOneField(Burger, on_delete=models.CASCADE)
     total_price = models.IntegerField(null=True, blank=True)
     order_id = models.CharField(max_length=20)
-    order_time = models.DateTimeField(auto_now_add=True)
-    deliver_time = models.DateTimeField(auto_now=True)
+    order_time = models.DateTimeField(null=True, blank=True)
+    deliver_time = models.DateTimeField(null=True, blank=True)
     delivered = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class Store(models.Model):
+    open = models.BooleanField(default=True)
 
     def __str__(self):
         return str(self.id)

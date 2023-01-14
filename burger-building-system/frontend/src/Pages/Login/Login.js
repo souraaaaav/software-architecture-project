@@ -39,7 +39,7 @@ const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
 
                 <div className="form-container" style={{ height: '620px' }}>
                     <div className="avatar"></div>
-                    <div className="title">Stock Market Supervisor</div>
+                    <div className="title">Burger Builder</div>
                     <div className="sub-title">CR3W</div>
                     <form onSubmit={(e) => handleLoginSubmit(e)}>
                         <div className="username">

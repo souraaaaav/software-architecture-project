@@ -14,13 +14,17 @@ import Login from "./Pages/Login/Login";
 import ForgetPasswordConfirm from './Pages/ForgetPassword/ForgetPasswordConfirm/ForgetPasswordConfirm.js';
 import ForgetPasswordStart from './Pages/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
 
+import AcceptedOrders from "./Pages/AcceptedOrders/AcceptedOrders";
+import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
+import AdminIndividualDashboard from "./Pages/AdminIndividualDashboard/AdminIndividualDashboard";
 import AllOrders from "./Pages/AllOrders/AllOrders";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Order from "./Pages/Order/Order";
+import Post from "./Pages/Post/Post";
 import Registration from "./Pages/Registration/Registration";
 import UserEmailConfirm from "./Pages/UserEmailConfirm/UserEmailConfirm";
 import UserIndividualOrrder from "./Pages/UserIndividualOrrder/UserIndividualOrrder";
-import { UserPrivateRoute } from "./private/PrivateRoute";
+import { AdminPrivateRoute, UserPrivateRoute } from "./private/PrivateRoute";
 
 
 const App = ({ check_continuous_auth }) => {
@@ -38,7 +42,25 @@ const App = ({ check_continuous_auth }) => {
           <Route exact path='/login' element={<Login />} />
           <Route exact path='/forget-password' element={<ForgetPasswordStart />} />
           <Route exact path='/forget-password/confirm' element={<ForgetPasswordConfirm />} />
+          {/* admin part */}
+          <Route exact path='/admin-dashboard' element={
+            <AdminPrivateRoute>
+              <AdminDashboard />
+            </AdminPrivateRoute>} />
+          <Route exact path='/accepted-orders' element={
+            <AdminPrivateRoute>
+              <AcceptedOrders />
+            </AdminPrivateRoute>} />
+          <Route exact path='/admin-order/:id/detail' element={
+            <AdminPrivateRoute>
+              <AdminIndividualDashboard />
+            </AdminPrivateRoute>} />
 
+          {/* user part */}
+          <Route exact path='/post' element={
+
+            <Post />
+          } />
           <Route exact path='/order' element={
             <UserPrivateRoute>
               <Order />

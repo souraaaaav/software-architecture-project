@@ -100,6 +100,36 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                             </li>
                         </>
                         : null}
+                    {token && isAuthenticated && user.isVerified && user.is_superuser === true ?
+                        <>
+
+                            <li>
+                                <NavLink activeClassName="activeLink" to='/admin-dashboard'>
+                                    <i class='bx bx-grid-alt'></i>
+                                    <span class="links_name">Pending Orders</span>
+                                </NavLink>
+                                <span class="tooltip">Pending Orders</span>
+                            </li>
+                            <li>
+                                <NavLink activeClassName="activeLink" to='/accepted-orders'>
+                                    <i class='bx bxs-notepad'></i>
+                                    <span class="links_name">Accepted Orders</span>
+                                </NavLink>
+                                <span class="tooltip">Accepted Orders</span>
+                            </li>
+                            <li class="profile">
+                                <div class="profile-details">
+                                    <img src={testImage} alt="profileImg" />
+                                    <div class="name_job">
+                                        <div class="name">{user.fullname}</div>
+                                        <div class="job">{user.email.substr(0, 4) + '*********' + user.email.substr(user.email.length - 6)}</div>
+                                    </div>
+                                </div>
+                                <i class='bx bx-log-out' id="log_out" onClick={(e) => handleLogout(e)} ></i>
+
+                            </li>
+                        </> : null
+                    }
 
                     {token && isAuthenticated && user.isVerified && user.is_superuser === false ?
                         <>

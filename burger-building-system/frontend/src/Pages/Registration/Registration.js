@@ -35,7 +35,7 @@ const Registration = ({ create_student_user, isAuthenticated, isLoading, token, 
                 <p style={{ height: '20px' }}></p>
                 <div class="form-container">
 
-                    <div class="title">Stock Market Supervisor</div>
+                    <div class="title">Burger Builder</div>
 
                     <form onSubmit={e => handleSubmit(e)}>
                         <div class="username">

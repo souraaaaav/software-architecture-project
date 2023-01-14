@@ -14,5 +14,12 @@ urlpatterns = [
     path('create-order/', views.createOrder),
     path('all-orders/', views.getAllOrder),
     path('order/<int:id>/', views.getIndividualOrder),
+    path('details/<int:id>/admin-order/', views.getIndividualAdminOrder),
+    path('admin/all-orders/', views.getAdminAllOrder),
+    path('admin/all-accepted-orders/', views.getAdminAcceptedOrder),
+    path('admin/accept-order/', views.adminAcceptOrder),
+    path('admin/check-open/', views.checkOpen),
+    path('admin/open-store/', views.storeOpen),
+    path('admin/close-store/', views.storeClose),
 
 ]

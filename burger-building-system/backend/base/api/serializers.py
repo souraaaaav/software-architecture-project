@@ -1,5 +1,5 @@
 
-from base.models import Burger, Order, User
+from base.models import Burger, Order, User, Store
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 
@@ -8,6 +8,12 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["email", "isVerified", "is_superuser"]
+
+
+class StoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Store
+        fields = ["open"]
 
 
 class OrderSerializer(serializers.ModelSerializer):

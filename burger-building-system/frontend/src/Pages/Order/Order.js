@@ -31,6 +31,7 @@ const Order = ({ ingredients, totalPrice, email, setIngredients }) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setOpen(false);
+        toast.success("Your order Id is sent to your email");
         navigate('/all-orders');
     };
     const handleSubmit = () => {
@@ -46,7 +47,6 @@ const Order = ({ ingredients, totalPrice, email, setIngredients }) => {
                 setOrderId(response.data.orderId);
                 setIngredients();
                 setLoading(false);
-                toast.success("Order complete");
                 handleOpen();
             })
             .catch(err => {

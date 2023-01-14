@@ -1,7 +1,8 @@
+import datetime
 import random
 import string
 
-from base.models import Burger, Order, User
+from base.models import Burger, Order, Store, User
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
@@ -17,8 +18,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .permissions import isVerifiedUser
-from .serializers import (LoginSerializer, OrderSerializer, UserSerializer,
-                          userSignupSerializer)
+from .serializers import (LoginSerializer, OrderSerializer, StoreSerializer,
+                          UserSerializer, userSignupSerializer)
 
 
 @api_view(["POST"])
@@ -32,7 +33,7 @@ def passwordChangeRequest(request):
         'password_reset_template.html', {'context': generatedOtp})
     plain_message = strip_tags(html_message)
     send_mail(
-        "Password Reset for {title}".format(title="Stock Market Supervisor"),
+        "Password Reset for {title}".format(title="Burger BY CR3W"),
         plain_message,
         "souravdebnath97@gmail.com",
         [given_mail],
@@ -86,7 +87,7 @@ class userSignupView(generics.GenericAPIView):
         })
         plain_message = strip_tags(html_message)
         send_mail(
-            "Email Confirmation for Stock Market Supervisor",
+            "Email Confirmation for Burger By CR3W",
             plain_message,
             "souravdebnath97@gmail.com",
             [user_data.email],
@@ -179,8 +180,17 @@ def createOrder(request):
         salad=salad, bacon=bacon, cheese=cheese, meat=meat)
     uniqueId = generateOrderId()
     order = Order.objects.create(
-        user=user, burger=burger, total_price=totalPrice, order_id=uniqueId, delivered=False)
-
+        user=user, burger=burger, total_price=totalPrice, order_id=uniqueId, delivered=False, order_time=datetime.datetime.now(), deliver_time=None)
+    html_message = render_to_string(
+        'order_confirmation_template.html', {'context': uniqueId})
+    plain_message = strip_tags(html_message)
+    send_mail(
+        "Order ID for {title}".format(title="Burger Builder By CR3W"),
+        plain_message,
+        "souravdebnath97@gmail.com",
+        [email],
+        html_message=html_message
+    )
     return Response({
         'orderId': uniqueId
     }, status=status.HTTP_200_OK)
@@ -196,6 +206,22 @@ def getAllOrder(request):
     }, status=status.HTTP_200_OK)
 
 
+@api_view(["GET"])
+def getAdminAllOrder(request):
+    order = Order.objects.filter(delivered=False)
+    return Response({
+        'orders': OrderSerializer(order, many=True).data
+    }, status=status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+def getAdminAcceptedOrder(request):
+    order = Order.objects.filter(delivered=True).order_by('-order_time')
+    return Response({
+        'orders': OrderSerializer(order, many=True).data
+    }, status=status.HTTP_200_OK)
+
+
 @api_view(["POST"])
 def getIndividualOrder(request, id):
     email = request.data['email']
@@ -204,3 +230,62 @@ def getIndividualOrder(request, id):
     return Response({
         'orders': OrderSerializer(order).data
     }, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+def getIndividualAdminOrder(request, id):
+    try:
+        email = request.data['email']
+        user = User.objects.get(email=email)
+        if user.is_superuser:
+            order = Order.objects.get(id=id)
+            return Response({
+                'orders': OrderSerializer(order).data
+            }, status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["POST"])
+def adminAcceptOrder(request):
+    try:
+        email = request.data['email']
+        id = request.data['id']
+        user = User.objects.get(email=email)
+        if user.is_superuser:
+            order = Order.objects.get(id=id)
+
+            order.delivered = True
+            print(1)
+            order.deliver_time = datetime.datetime.now()
+            print(2)
+            order.save()
+            print(3)
+            return Response({
+                'message': 'successfully accepted'
+            }, status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+def checkOpen(request):
+    open = Store.objects.get(id=1)
+    newOpen = StoreSerializer(open).data
+    return Response({'open': newOpen}, status=status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+def storeOpen(request):
+    open = Store.objects.get(id=1)
+    open.open = True
+    open.save()
+    return Response({'open': True}, status=status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+def storeClose(request):
+    open = Store.objects.get(id=1)
+    open.open = False
+    open.save()
+    return Response({'open': False}, status=status.HTTP_200_OK)

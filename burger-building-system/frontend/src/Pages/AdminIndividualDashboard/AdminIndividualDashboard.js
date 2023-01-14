@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
 import { toast } from 'react-toastify';
 import Burger from '../../components/Burger/Burger';
-import './UserIndividualOrrder.css';
+import './AdminIndividualDashboard.css';
 
 const UserIndividualOrrder = ({ email }) => {
     const params = useParams();
@@ -20,7 +20,7 @@ const UserIndividualOrrder = ({ email }) => {
         };
         const body = JSON.stringify({ 'email': email });
 
-        axios.post(`http://localhost:8000/api/order/${params.id}/`, body, config)
+        axios.post(`http://localhost:8000/api/details/${params.id}/admin-order/`, body, config)
             .then(res => {
                 setBurgerData(res.data.orders);
                 setLoading(false);
@@ -106,7 +106,7 @@ const UserIndividualOrrder = ({ email }) => {
                         <span className='line-clamp'><b>Order Date:</b> {new Date(burgerData.order_time).toLocaleDateString("en-US", options)}</span>
                         <span><b>Order Time:</b> {new Date(burgerData.order_time).toLocaleTimeString()}</span>
                         <span><b>Delivered:</b> {burgerData.delivered ? <span style={{ color: 'green' }}>True</span> : <span style={{ color: 'red' }}>False</span>}</span>
-                        <span className='line-clamp'><b>Deliver Date:</b> {!burgerData.delivered ? <span style={{ color: 'red' }} > Order not Ready</span> : <span>{new Date(burgerData.deliver_time).toLocaleDateString("en-US", options)}</span>}</span>
+                        <span className='line-clamp'><b>Deliver Date: </b>{!burgerData.delivered ? <span style={{ color: 'red' }} > Order not Ready</span> : <span>{new Date(burgerData.deliver_time).toLocaleDateString("en-US", options)}</span>}</span>
                         <span><b>Deliver Time:</b> {!burgerData.delivered ? <span style={{ color: 'red' }} > Order not Ready</span> : <span>{new Date(burgerData.deliver_time).toLocaleTimeString()}</span>}</span>
                     </div>
                 </div>}

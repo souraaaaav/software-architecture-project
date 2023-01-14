@@ -136,6 +136,9 @@ export const check_continuous_auth = () => (dispatch) => {
 
 export const logout = () => (dispatch) => {
     dispatch({ type: actionTypes.LOADING_START });
+    dispatch({
+        type: actionTypes.SET_INGREDIENTS,
+    });
     localStorage.removeItem("token");
     dispatch({ type: actionTypes.AUTH_LOGOUT });
     toast.success("logout success");
