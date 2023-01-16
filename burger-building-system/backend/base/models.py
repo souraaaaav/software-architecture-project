@@ -66,6 +66,7 @@ class Order(models.Model):
     order_time = models.DateTimeField(null=True, blank=True)
     deliver_time = models.DateTimeField(null=True, blank=True)
     delivered = models.BooleanField(default=False)
+    transactionId = models.CharField(max_length=150, null=True, blank=True)
 
     def __str__(self):
         return str(self.id)

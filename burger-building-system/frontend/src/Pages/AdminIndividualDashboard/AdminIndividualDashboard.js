@@ -105,6 +105,7 @@ const UserIndividualOrrder = ({ email }) => {
                         <span><b>Order Id:</b> {burgerData.order_id}</span>
                         <span className='line-clamp'><b>Order Date:</b> {new Date(burgerData.order_time).toLocaleDateString("en-US", options)}</span>
                         <span><b>Order Time:</b> {new Date(burgerData.order_time).toLocaleTimeString()}</span>
+                        <span><b>Transaction Id:</b> {burgerData.transactionId}</span>
                         <span><b>Delivered:</b> {burgerData.delivered ? <span style={{ color: 'green' }}>True</span> : <span style={{ color: 'red' }}>False</span>}</span>
                         <span className='line-clamp'><b>Deliver Date: </b>{!burgerData.delivered ? <span style={{ color: 'red' }} > Order not Ready</span> : <span>{new Date(burgerData.deliver_time).toLocaleDateString("en-US", options)}</span>}</span>
                         <span><b>Deliver Time:</b> {!burgerData.delivered ? <span style={{ color: 'red' }} > Order not Ready</span> : <span>{new Date(burgerData.deliver_time).toLocaleTimeString()}</span>}</span>

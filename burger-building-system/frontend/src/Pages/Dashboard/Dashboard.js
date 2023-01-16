@@ -77,6 +77,13 @@ const Dashboard = ({ addIngredient, removeIngredient, ingredients, totalPrice })
                             <button class="removeButton" disabled={ingredients.bacon <= 0} onClick={() => removeIngredient('bacon')}>Remove</button>
                         </div>
                     </div>
+                    <div className='control-inner-wrapper' >
+                        <span className='control-ingredient-name' >shosha : </span>
+                        <div className='button-gap'>
+                            <button class="addButton" onClick={() => addIngredient('bacon')}>Add</button>
+                            <button class="removeButton" disabled={ingredients.bacon <= 0} onClick={() => removeIngredient('bacon')}>Remove</button>
+                        </div>
+                    </div>
                 </div>
                 <div className='button-wrapper'>
                     <button class="orderButton" disabled={totalPrice === 40 || storeData === false} onClick={handleOrder}>Order</button>

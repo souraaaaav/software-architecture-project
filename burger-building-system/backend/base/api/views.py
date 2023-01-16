@@ -175,12 +175,13 @@ def createOrder(request):
     bacon = int(request.data['bacon'])
     cheese = int(request.data['cheese'])
     meat = int(request.data['meat'])
+    transactionId = str(request.data['transactionId'])
     user = User.objects.get(email=email)
     burger = Burger.objects.create(
         salad=salad, bacon=bacon, cheese=cheese, meat=meat)
     uniqueId = generateOrderId()
     order = Order.objects.create(
-        user=user, burger=burger, total_price=totalPrice, order_id=uniqueId, delivered=False, order_time=datetime.datetime.now(), deliver_time=None)
+        user=user, burger=burger, total_price=totalPrice, order_id=uniqueId, delivered=False, transactionId=transactionId, order_time=datetime.datetime.now(), deliver_time=None)
     html_message = render_to_string(
         'order_confirmation_template.html', {'context': uniqueId})
     plain_message = strip_tags(html_message)

@@ -1,5 +1,5 @@
 
-from base.models import Burger, Order, User, Store
+from base.models import Burger, Order, Store, User
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 
@@ -20,7 +20,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ["id", "burger", "total_price",
-                  "order_id", "order_time", "delivered", "deliver_time"]
+                  "order_id", "order_time", "delivered", "transactionId", "deliver_time"]
         depth = 1
 
 

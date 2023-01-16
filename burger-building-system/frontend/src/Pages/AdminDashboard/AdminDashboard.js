@@ -63,10 +63,11 @@ const AdminDashboard = ({ email }) => {
 
 
     const columns = [
-        { title: "Order Id", field: "order_id", filtering: true, filterPlaceholder: "Filter by Id", align: 'center', width: '40%' },
-        { title: "Total Price", field: "total_price", filterPlaceholder: "Filter by Price", filtering: true, sorting: true, align: 'center', width: '30%' },
+        { title: "Order Id", field: "order_id", filtering: true, filterPlaceholder: "Filter by Id", align: 'center', width: '30%' },
+        { title: "Transaction Id", field: "transactionId", filtering: true, filterPlaceholder: "Filter by Id", align: 'center', width: '30%' },
+        { title: "Total Price", field: "total_price", filterPlaceholder: "Filter by Price", filtering: true, sorting: true, align: 'center', width: '10%' },
         {
-            title: "Delivered", field: "delivered", sorting: true, align: 'center', filtering: false, width: '15%'
+            title: "Delivered", field: "delivered", sorting: true, align: 'center', filtering: false, width: '10%'
         },
 
     ];

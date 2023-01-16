@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { setIngredients } from '../../actions/burger';
 import Burger from '../../components/Burger/Burger';
 import './Order.css';
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -34,20 +35,21 @@ const Order = ({ ingredients, totalPrice, email, setIngredients }) => {
         toast.success("Your order Id is sent to your email");
         navigate('/all-orders');
     };
-    const handleSubmit = () => {
+    const handleSubmit = (name, transactionId) => {
         setLoading(true);
         const config = {
             headers: {
                 'Content-Type': 'application/json',
             }
         };
-        const body = JSON.stringify({ 'email': email, 'totalPrice': totalPrice, 'salad': ingredients.salad, 'bacon': ingredients.bacon, 'cheese': ingredients.cheese, 'meat': ingredients.meat });
+        const body = JSON.stringify({ 'email': email, 'totalPrice': totalPrice, 'salad': ingredients.salad, 'bacon': ingredients.bacon, 'cheese': ingredients.cheese, 'meat': ingredients.meat, 'transactionId': transactionId });
         axios.post('http://localhost:8000/api/create-order/', body, config)
             .then(response => {
                 setOrderId(response.data.orderId);
                 setIngredients();
                 setLoading(false);
-                handleOpen();
+                toast.success("Your order Id is sent to your email and paid by " + name);
+                navigate('/all-orders');
             })
             .catch(err => {
                 setLoading(false);
@@ -128,19 +130,32 @@ const Order = ({ ingredients, totalPrice, email, setIngredients }) => {
                             </Box>
                         </Modal>
                     </div>
-                    <div className='card-outer-wrapper'>
-                        <span className='bolder-text'>Payment Information</span>
-                        <TextField sx={{ width: 400 }} id="outlined-basic" label="Name on Card" variant="outlined" />
-                        <TextField sx={{ width: 400 }} id="outlined-basic" label="Credit Card Number" variant="outlined" />
-                        <TextField sx={{ width: 400 }} id="outlined-basic" label="Exp Month" variant="outlined" />
-                        <div className='inner-card-wrapper'>
-                            <TextField sx={{ width: 190 }} id="outlined-basic" label="Exp Year" variant="outlined" />
-                            <TextField sx={{ width: 190 }} id="outlined-basic" label="CVV" variant="outlined" />
-                        </div>
-                        <div className='button-wrapper'>
-                            <button class="orderButton" onClick={handleSubmit} >Order</button>
-                        </div>
+                    <div style={{ textAlign: 'center' }}>
+                        <PayPalScriptProvider options={{ "client-id": "give your paypal id" }}>
+                            <PayPalButtons
+                                createOrder={(data, actions) => {
+                                    return actions.order.create({
+                                        purchase_units: [
+                                            {
+                                                amount: {
+                                                    value: totalPrice,
+                                                },
+                                            },
+                                        ],
+                                    });
+                                }}
+                                onApprove={async (data, actions) => {
+                                    const details = await actions.order.capture();
+                                    console.log(details);
+                                    const name = details.payer.name.given_name;
+                                    const transactionId = details.purchase_units[0].payments.captures[0].id;
+                                    // alert("Transaction completed by " + name);
+                                    handleSubmit(name, transactionId);
+                                }}
+                            />
+                        </PayPalScriptProvider>
                     </div>
+
                     <p style={{ height: 20 }}></p>
                 </div>
             }

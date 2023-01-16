@@ -41,10 +41,11 @@ const AllOrders = ({ email }) => {
 
 
     const columns = [
-        { title: "Order Id", field: "order_id", filtering: true, filterPlaceholder: "Filter by Id", align: 'center' },
-        { title: "Total Price", field: "total_price", filterPlaceholder: "Filter by Price", filtering: true, sorting: true, align: 'center' },
+        { title: "Order Id", field: "order_id", filtering: true, filterPlaceholder: "Filter by Id", align: 'center', width: '30%' },
+        { title: "Transaction Id", field: "transactionId", filtering: true, filterPlaceholder: "Filter by Id", align: 'center', width: '30%' },
+        { title: "Total Price", field: "total_price", filterPlaceholder: "Filter by Price", filtering: true, sorting: true, align: 'center', width: '15%' },
         {
-            title: "Delivered", field: "delivered", sorting: true, align: 'center', filtering: false,
+            title: "Delivered", field: "delivered", sorting: true, align: 'center', filtering: false, width: '15%'
         },
 
     ];
